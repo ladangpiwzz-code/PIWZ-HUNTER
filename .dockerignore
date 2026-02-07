@@ -1,0 +1,15 @@
+.git
+.gitignore
+node_modules
+*.log
+.env
+*.pem
+*.key
+docker-compose.yml
+Dockerfile.dev
+README.md
+*.sql
+backups/
+tmp/
+.vscode/
+.idea/
