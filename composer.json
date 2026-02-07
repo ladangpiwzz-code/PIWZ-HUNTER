@@ -1,0 +1,24 @@
+{
+    "name": "piwz-hunter/control-panel",
+    "description": "Dark Cyber Control Panel",
+    "type": "project",
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "ext-json": "*",
+        "ext-mbstring": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "PiwzHunter\\": "src/"
+        }
+    },
+    "scripts": {
+        "start": "php -S 0.0.0.0:${PORT:-8080}",
+        "setup": "php setup.php",
+        "backup": "php backup.php"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
