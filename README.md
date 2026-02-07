@@ -1,11 +1,22 @@
-# PIWZ HUNTER - Dark Cyber Control Panel
+# 🔥 PIWZ HUNTER - Dark Cyber Control Panel 🔥
 
-## 🚀 DEPLOYMENT TO KOYEB
+## ⚠️ WARNING
+**FOR EDUCATIONAL AND AUTHORIZED PENETRATION TESTING ONLY!**
+**UNAUTHORIZED ACCESS IS ILLEGAL AND PUNISHABLE BY LAW!**
 
-### 1. CREATE GITHUB REPOSITORY
+## 🚀 QUICK DEPLOYMENT TO KOYEB
+
+### **1. PREPARE YOUR CODE**
 ```bash
-git init
-git add .
-git commit -m "Initial PIWZ HUNTER deploy"
-git remote add origin https://github.com/yourusername/piwz-hunter.git
-git push -u origin main
+# Clone or create your project
+mkdir piwz-hunter
+cd piwz-hunter
+
+# Copy all files to this folder:
+# - index.html
+# - api.php
+# - style.css
+# - script.js
+# - Dockerfile
+# - .dockerignore
+# - composer.json (optional)
